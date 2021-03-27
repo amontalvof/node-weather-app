@@ -8,32 +8,16 @@ const questions = [
         message: 'What would you like to do?',
         choices: [
             {
-                value: '1',
-                name: `${'1.'.green} Create a task`,
+                value: 1,
+                name: `${'1.'.green} Search city`,
             },
             {
-                value: '2',
-                name: `${'2.'.green} List all tasks`,
+                value: 2,
+                name: `${'2.'.green} Search history`,
             },
             {
-                value: '3',
-                name: `${'3.'.green} List completed tasks`,
-            },
-            {
-                value: '4',
-                name: `${'4.'.green} List pending tasks`,
-            },
-            {
-                value: '5',
-                name: `${'5.'.green} Complete tasks`,
-            },
-            {
-                value: '6',
-                name: `${'6.'.green} Delete a task`,
-            },
-            {
-                value: '7',
-                name: `${'7.'.green} Exit`,
+                value: 3,
+                name: `${'3.'.green} Exit`,
             },
         ],
     },
