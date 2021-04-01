@@ -21,8 +21,12 @@ const main = async () => {
                 const places = await searches.city(cityName);
                 // select place
                 const id = await listPlaces(places);
+                if (id === `${places.length + 1}`) continue;
                 const selectedPlace = places.find((item) => item.id === id);
+                // save to db
+                searches.addHistory(selectedPlace.name);
                 // weather
+                console.log('Loading...');
                 const weather = await searches.weatherPlace(
                     selectedPlace.lat,
                     selectedPlace.lng
@@ -37,6 +41,10 @@ const main = async () => {
                 console.log('Weather:', weather.desc);
                 break;
             case 2:
+                searches.history.forEach((item, index) => {
+                    const idx = `${index + 1}.`.green;
+                    console.log(`${idx} ${item}`);
+                });
                 break;
         }
         if (opt !== 3) await pause();

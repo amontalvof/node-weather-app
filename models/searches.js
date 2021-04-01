@@ -1,6 +1,8 @@
+const fs = require('fs');
 const axios = require('axios');
 class Searches {
-    history = ['Madrid', 'San José'];
+    history = [];
+    dbPath = './db/database.json';
 
     constructor() {
         // TODO: leer db si existe
@@ -61,6 +63,23 @@ class Searches {
             console.error(error);
         }
     }
+
+    addHistory(place = '') {
+        if (this.history.includes(place.toLowerCase())) {
+            return;
+        }
+        this.history.unshift(place.toLowerCase());
+        this.saveDB();
+    }
+
+    saveDB() {
+        const payload = {
+            history: this.history,
+        };
+        fs.writeFileSync(this.dbPath, JSON.stringify(payload));
+    }
+
+    readDB() {}
 }
 
 module.exports = Searches;
