@@ -41,7 +41,7 @@ const main = async () => {
                 console.log('Weather:', weather.desc);
                 break;
             case 2:
-                searches.history.forEach((item, index) => {
+                searches.capitalizedHistory.forEach((item, index) => {
                     const idx = `${index + 1}.`.green;
                     console.log(`${idx} ${item}`);
                 });

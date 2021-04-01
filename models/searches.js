@@ -5,7 +5,17 @@ class Searches {
     dbPath = './db/database.json';
 
     constructor() {
-        // TODO: leer db si existe
+        this.readDB();
+    }
+
+    get capitalizedHistory() {
+        return this.history.map((item) => {
+            let words = item.split(' ');
+            words = words.map(
+                (word) => word[0].toUpperCase() + word.substring(1)
+            );
+            return words.join(' ');
+        });
     }
 
     get paramsMapbox() {
@@ -68,6 +78,7 @@ class Searches {
         if (this.history.includes(place.toLowerCase())) {
             return;
         }
+        this.history = this.history.splice(0, 5);
         this.history.unshift(place.toLowerCase());
         this.saveDB();
     }
@@ -79,7 +90,14 @@ class Searches {
         fs.writeFileSync(this.dbPath, JSON.stringify(payload));
     }
 
-    readDB() {}
+    readDB() {
+        if (!fs.existsSync(this.dbPath)) {
+            return;
+        }
+        const info = fs.readFileSync(this.dbPath, { encoding: 'utf8' });
+        const data = JSON.parse(info);
+        this.history = data.history;
+    }
 }
 
 module.exports = Searches;
