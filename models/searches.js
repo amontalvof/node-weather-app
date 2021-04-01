@@ -14,6 +14,13 @@ class Searches {
         };
     }
 
+    get paramsOpenWeather() {
+        return {
+            appid: process.env.OPENWEATHER_KEY,
+            units: 'metric',
+        };
+    }
+
     async city(place = '') {
         try {
             // http request
@@ -31,6 +38,27 @@ class Searches {
         } catch (error) {
             console.error(error);
             return [];
+        }
+    }
+
+    async weatherPlace(lat, lon) {
+        try {
+            const instance = axios.create({
+                baseURL: 'https://api.openweathermap.org/data/2.5/weather',
+                params: {
+                    ...this.paramsOpenWeather,
+                    lat,
+                    lon,
+                },
+            });
+            const resp = await instance.get();
+            const { weather, main } = resp.data;
+            return {
+                desc: weather[0].description,
+                temp: `${main.temp}${String.fromCharCode(176)}C`,
+            };
+        } catch (error) {
+            console.error(error);
         }
     }
 }
